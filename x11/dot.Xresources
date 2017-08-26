@@ -1,0 +1,20 @@
+XTerm*termName: xterm-256color
+XTerm*locale: true
+XTerm*metaSendsEscape: true
+
+! pixmap font
+!XTerm*font: -*-clean-*-*-*-*-18-*-*-*-*-*-*-*
+!XTerm*font: -*-terminus-medium-*-*-*-18-*-*-*-*-*-iso10646-*
+
+! truetype font:
+xterm*faceName: DejaVu Sans Mono Book
+xterm*faceSize: 11
+
+!XTerm*colorBLMode: true
+!XTerm*veryBoldColors: 7
+XTerm*showBlinkAsBold: true
+
+XTerm*selectToClipboard: true
+
+XTerm*geometry: 151x39
+

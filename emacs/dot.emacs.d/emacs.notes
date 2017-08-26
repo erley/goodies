@@ -1,0 +1,187 @@
+window-system
+		= 'nil' if in terminal (confirmed even on MacOSX)
+		= 'w32' if native Windows build (confirmed)
+		= 'x' if under X Window (confirmed)
+		= 'ns' if under MacOSX (confirmed)
+?window-system-version
+		- for windows only (=5 on WinXP64SP2)
+?operating-system-release
+		- release of the operating system Emacs is running on
+?system-configuration
+		- like configuration triplet: cpu-manufacturer-os
+system-name
+		- host name of the machine you are running on
+			="makwifi.erley.homeip.net"
+			="desk.erley.homeip.net"
+			="ERLEY"
+?system-time-locale
+system-type
+		- indicating the type of operating system you are using:
+			= 'gnu' (GNU Hurd)
+			= 'gnu/linux'
+			= 'gnu/kfreebsd'
+			== 'berkeley-unix' (FreeBSD)
+			== 'darwin' (GNU-Darwin, Mac OS X)
+			= 'ms-dos'
+			== 'windows-nt'
+			= 'cygwin'
+?system-uses-terminfo
+?window-size-fixed
+
+consider using and the following functions too:
+(fboundp ...)
+		- return t if SYMBOL's function definition is not void
+(featurep ...)
+		- returns t if FEATURE is present in this Emacs
+(display-graphic-p)
+		- return non-nil (=t) if DISPLAY is a graphic display
+		  graphical displays are those which are capable
+		  of displaying several frames and several different
+		  fonts at once
+(display-multi-font-p)
+		- same as 'display-graphic-p'
+(display-multi-frame-p)
+		- same as 'display-graphic-p'
+(display-color-p)
+		- return non-nil (=t) if DISPLAY supports color
+(display-images-p)
+		- return non-nil (=t) if DISPLAY can display images
+(display-grayscale-p)
+		- return non-nil (=t) if frames on DISPLAY can display shades of gray
+(display-mouse-p)
+		- return non-nil (=t) if DISPLAY has a mouse available
+(display-popup-menus-p)
+		- return non-nil (=t) if popup menus are supported on DISPLAY
+(display-selections-p)
+		- return non-nil (=t) if DISPLAY supports selections
+
+Perform checks like this:
+(when window-system ...)
+(when (eq window-system 'x) ...)
+(when (>= emacs-major-version 22) ...)
+(when (fboundp '...) ...)
+(when (featurep '...) ...)
+
+===========================================================================
+
+;;===============================================
+;; set init file for custom settings
+(setq custom-file "~/.emacs.d/custom.el")
+
+;;===============================================
+;; Always ask before quit, stay with emacs as long as possible
+(setq confirm-kill-emacs 'yes-or-no-p)
+
+;;===============================================
+;; Make cursor as wide as a character below it
+(setq x-stretch-cursor 't)
+
+;;===============================================
+;; Sets "Ctrl-x /" for commenting selected lines
+(global-set-key "\C-x/" 'comment-or-uncomment-region)
+
+;;===============================================
+;; load host-specific config file
+(defun erley/get-short-hostname ()
+  (let* ((sys-name (system-name))
+         (idx (string-match "\\." sys-name)))
+    (if idx
+        (substring sys-name 0 idx)
+      sys-name)))
+(let* ((fname (concat "~/.emacs.d/emacs-rc-local-" (erley/get-short-hostname) ".el")))
+  (when (file-exists-p fname)
+    (load fname)))
+
+;;===============================================
+;; custom compile
+(require 'compile)
+(setq compilation-disable-input nil)
+(setq compilation-scroll-output t)
+(setq mode-compile-always-save-buffer-p t)
+
+(defun erley/compile()
+  "Saves all unsaved buffers, and runs 'compile'."
+  (interactive)
+  (save-some-buffers t)
+  (let*  (
+	(current-dir (file-name-directory
+		(or (buffer-file-name (current-buffer))
+			default-directory))
+	)
+	(prj (ede-current-project current-dir)
+	)
+	(root-dir (ede-project-root-directory prj)
+	)
+         )
+;;    (message "AA: %s" root-dir)
+;	(compile '(concat "cd " root-dir "; make -j2"))
+	(concat "cd " root-dir "; make -j2")
+)
+
+;;===============================================
+;; load customization file
+;; (argument "noerror" to ignore errors if file doesn't exist)
+(load custom-file 'noerror)
+
+-----------------------------------------------
+Aquamacs loads site-start.el from any (sub)directories in:
+	/Library/Application Support/Emacs
+	/Library/Application Support/Aquamacs Emacs
+	~/Library/Application Support/Emacs
+	~/Library/Application Support/Aquamacs Emacs
+So it can simplify its configuration
+-----------------------------------------------
+(custom-set-variables
+ '(custom-file "~/.emacs")
+ ;; use same window for all buffers
+ '(one-buffer-one-frame-mode nil nil (aquamacs-frame-setup))
+ ;; use emacs language switcher instead of system one
+ '(mac-input-method-mode nil)
+ ;; ???
+ '(aquamacs-styles-mode nil nil (color-theme))
+ ;; ???
+ '(smart-frame-positioning-mode nil)
+ ;; use Option key as Meta
+ '(ns-command-modifier 'meta)
+)
+-----------------------------------------------
+
+To detect Aquamacs (use "unless" instead of "when" to reverse tested condition):
+
+solution 1:
+(when (featurep 'aquamacs)
+	...do Aquamacs stuff...
+)
+
+solution 2:
+(defvar aquamacs-p (string-match "Aquamacs" (version)))
+(when (eq aquamacs-p 'nil)
+	...do non-Aquamacs stuff...
+)
+
+solution 3:
+(when (boundp 'aquamacs-version)
+	...do Aquamacs stuff...
+)
+
+solution 4:
+(when (equal system-type 'darwin)
+	...do Aquamacs stuff...
+)
+
+solution 5:
+(when (equal system-type '"berkeley-unix")
+	...do FreeBSD stuff...
+)
+
+-----------------------------------------------
+To detect console-mode:
+
+solution 1:
+(when (eq window-system 'nil)
+	...console stuff...
+)
+
+-----------------------------------------------
+?emacs-major-version
+?emacs-minor-version

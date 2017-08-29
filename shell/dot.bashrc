@@ -1,11 +1,13 @@
 # ~/.bashrc ou /etc/bash.bashrc : executed by bash(1) for non-login shells.
 
-color_prompt=yes
-
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-# don't put duplicate lines or lines starting with space in the history
+#################
+# Global settings
+###
+
+# don't put duplicate lines in the history. See bash(1) for more options
 #export HISTCONTROL=ignoredups
 # ... and ignore same sucessive entries.
 export HISTCONTROL=ignoreboth
@@ -21,6 +23,9 @@ HISTFILESIZE=2000
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
+# Autocorrection of directory path for cd command
+shopt -s cdspell
+
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
 shopt -s globstar
@@ -29,13 +34,13 @@ shopt -s globstar
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
 ##############
 # Prompt color
-##############
+###
 
 # get current branch in git repo
 function parse_git_branch() {
@@ -86,11 +91,13 @@ function parse_git_dirty {
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-    xterm-color)
+    xterm-256color|screen-256color)
         color_prompt=yes
     ;;
 esac
-
+if [ "$INSIDE_EMACS" != "" ]; then
+    color_prompt=yes
+fi
 if [ "$color_prompt" = yes ]; then
     PS1_1="\[\e[36m\]\t\[\e[m\] "
     PS1_2="\[\e[32m\]\u\[\e[m\]@"
@@ -99,14 +106,13 @@ if [ "$color_prompt" = yes ]; then
     PS1_5="\[\e[33m\]\$(parse_git_branch)\[\e[m\]"
     PS1_6="\[\e[1;31m\]>\[\e[m\] "
     PS1="${PS1_1}${PS1_2}${PS1_3}${PS1_4}${PS1_5}${PS1_6}"
-#    PS1="\[\e[0;33m\]\u\[\e[m\]@\[\e[0;36m\]\h\[\e[m\] \[\e[1;34m\]\W\[\e[m\] \[\e[0;33m\]>\[\e[m\] "
     PS2="\[\e[0;30m\]\u\[\e[m\]\[\e[0;35m\]@\[\e[m\]\[\e[0;30m\]\h\[\e[m\] \[\e[0;30m\]\W\[\e[m\] \[\e[0;31m\]>\[\e[m\] "
     PS3="#? "
     PS4="+ % "
 else
     PS1='${debian_chroot:+($debian_chroot)}$\u@\h \W \$ '
 fi
-unset color_prompt force_color_prompt
+unset color_prompt
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
@@ -117,24 +123,33 @@ case "$TERM" in
     ;;
 esac
 
+#########
+# Exports
+###
+
 export LS_COLORS='ow=1;34:ln=1;34'
 export BACKGROUND_COLOR=black # or 'white'
+export JAVA_HOME=$(realpath $(dirname $(readlink -f $(which java)))/../..)
+export PATH=$PATH:/usr/sbin:$HOME/.local/bin
+export PAGER=less
 
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+# Less colors for man pages
+export LESS_TERMCAP_mb=$'\E[01;31m'		# begin blinking
+export LESS_TERMCAP_md=$'\E[01;38;5;74m'	# begin bold
+export LESS_TERMCAP_me=$'\E[0m'			# end mode
+export LESS_TERMCAP_se=$'\E[0m'			# end standout-mode
+export LESS_TERMCAP_so=$'\E[1;31;5;246m'	# begin standout-mode - info box
+export LESS_TERMCAP_ue=$'\E[0m'			# end underline
+export LESS_TERMCAP_us=$'\E[04;33;5;146m'	# begin underline
 
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
+###################
+# Alias definitions
+###
 
 # enable color support of ls and also add handy aliases
 if [ "$TERM" != "dumb" ] && [ -x /usr/bin/dircolors ]; then
     eval "$(dircolors -b)"
     alias ls='ls --color=auto'
-    alias dir='ls --color=auto --format=vertical'
-    alias vdir='ls --color=auto --format=long'
 
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
@@ -161,7 +176,17 @@ alias weather='curl wttr.in/Antibes'
 alias psgrep='ps o pid,user,args -C'
 alias gitlog='git log --graph --full-history --all --color --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s"'
 
-export JAVA_HOME=$(realpath $(dirname $(readlink -f $(which java)))/../..)
+# You may want to put all your additions into a separate file like
+# ~/.bash_aliases, instead of adding them here directly.
+# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+
+#############################
+# Command line autocompletion
+###
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -169,20 +194,6 @@ export JAVA_HOME=$(realpath $(dirname $(readlink -f $(which java)))/../..)
 if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
-
-export PATH=$PATH:/usr/sbin:$HOME/.local/bin
-
-# Less Colors for Man Pages
-export LESS_TERMCAP_mb=$'\E[01;31m'		# begin blinking
-export LESS_TERMCAP_md=$'\E[01;38;5;74m'	# begin bold
-export LESS_TERMCAP_me=$'\E[0m'			# end mode
-export LESS_TERMCAP_se=$'\E[0m'			# end standout-mode
-export LESS_TERMCAP_so=$'\E[1;31;5;246m'	# begin standout-mode - info box
-export LESS_TERMCAP_ue=$'\E[0m'			# end underline
-export LESS_TERMCAP_us=$'\E[04;33;5;146m'	# begin underline
-
-# Correction automatique des fautes de frappe sur la commande cd
-shopt -s cdspell
 
 ######################
 # Run SSH-Agent daemon
@@ -210,9 +221,34 @@ shopt -s cdspell
 
 export GPG_TTY=$(tty)
 
+## on VBox GPG Agent is initialized this way:
+if [ "$HOSTNAME" == "pandora" ]; then
+    GPG_ENV=~/.gnupg/environment
+
+    if (ps -C gpg-agent --no-headers -o command | grep "gpg-agent --supervised" > /dev/null) ; then
+        echo "GPG-Agent: reconfigure to enable SSH"
+        GPG_AGENT_PID=$(ps -C gpg-agent --no-headers -o pid | head -n1)
+        # do it 3 times according to man page
+        kill -SIGTERM ${GPG_AGENT_PID}
+        kill -SIGTERM ${GPG_AGENT_PID}
+        kill -SIGTERM ${GPG_AGENT_PID}
+        rm -f /var/run/user/$(id -u)/gnupg/*
+    fi
+    if (ps -C gpg-agent --no-headers -o pid > /dev/null) ; then
+        echo "GPG-Agent: already re-configured"
+    else
+        echo "GPG-Agent: initialization"
+        (umask 066; gpg-agent --daemon \
+            --allow-emacs-pinentry \
+            --enable-ssh-support \
+            --disable-scdaemon > ${GPG_ENV})
+        . ${GPG_ENV} > /dev/null
+#        gpg-connect-agent updatestartuptty /bye
+    fi
+fi
+
 ## on Prometheus laptop you have to
 # sudo apt-get install gpg-agent
 # sed -i 's/^use-ssh-agent/#use-ssh-agent/' /etc/X11/Xsession.options
 # sed -i 's/--daemon --sh/--daemon --enable-ssh-support --disable-scdaemon --sh/' /etc/X11/Xsession.d/90gpg-agent
 
-## on VBox you run the script gpg-load.sh

@@ -1,73 +1,73 @@
 "~/.vimrc ou /etc/vim/vimrc
-"Fichier de configuration principal de vim 7
-"Révision -- 4 septembre 2009
+"Main configuration file for vim 7
+"Revision -- 4 septembre 2009
 "
 "Pathogen
-call pathogen#infect()
+"call pathogen#infect()
 
 
-filetype indent plugin on       "Active les plugins de vim
-set nocompatible                "Desactive le mode de comptabilité
+filetype indent plugin on       "Activate ViM plugins
+set nocompatible                "Deactivate compatibility mode
 
-set encoding=utf-8              "Encodage
+set encoding=utf-8              "Encoding
 set fileencoding=utf-8
 
-syntax on                       "Active la coloration syntaxique
+syntax on                       "Activate syntax coloring
 set title                       "Set the terminal window title
 set ruler                       "Show lines and columns
-set number                      "Active l'affichage des numéros
-set mouse=a                     "Active la souris
+set number                      "Activate line numbering
+set mouse=a                     "Activate mouse
 set backspace=indent,eol,start  "Makes backspace key more powerful
-set wrap                        "Retour à la ligne automatique, pas de scroll horizontal
-set showcmd                     "Affiche les commandes dans le buffer en mode normal
-set showmode                    "Affiche le mode dans le buffer
-set showmatch                   "Affiche les délimiteurs fermants correspondants
+set wrap                        "Return line automatic, no horizontal scroll
+set showcmd                     "Show commands in buffer in normal mode
+set showmode                    "Show mode in buffer
+set showmatch                   "Show corresponding closing delimiters
 set showfulltag                 "Get function usage help automatically
-set list                        "Affiche les marques invisibles
+set list                        "Show invisible marks
 set listchars=tab:▶-            "Convert tabs in nice symbols
-set cursorline                 "Active une barre horizontale pour indiquer le curseur
-"set cursorcolumn               "Active une barre verticale
+set cursorline                  "Activate horizontal bar to indicate cursor
+"set cursorcolumn               "Activate vertical bar
 "set visualbell                 "Use visual bell instead of beeping
 
-set ttyfast                     "Améliore le rendu
-set background=dark             "Couleurs claires pour fond de terminal foncé, change le theme
-colorscheme koehler             "Colorscheme qui roxx
+set ttyfast                     "Improve rendering
+set background=dark             "Background color
+colorscheme koehler             "Color scheme
 
 set autoindent                  "Copy indent from current line when starting a new line
 set smartindent                 "Also recognizes some C syntax to manage the indent
 "set cindent                    "More clever and is configurable to different indenting styles
 
-set hlsearch                    "Met en surbrillance les résultats d'une recherche
-set incsearch                   "Active la recherche incrémentale
-set ignorecase                  "Ignore la casse lors de la recherche
-set smartcase                   "Sauf si la recherche est cassée
+set hlsearch                    "Highlight search results
+set incsearch                   "Activate incremental searches
+set ignorecase                  "Ignore case while searching
+set smartcase                   "Except if search is case-sensitive
 "set gdefault                   "Add /g when using %s
 
-set shiftwidth=4                "Tabs should be converted to a group of 8 spaces.
-set tabstop=4                   "Avec << et >>
+set shiftwidth=4                "Tabs should be converted to a group of 4 spaces.
+set tabstop=4                   "Tab size
 set softtabstop=4               "Causes backspace to delete 8 spaces=converted <TAB>
 set expandtab                   "Replaces a <TAB> with spaces
 set smarttab                    "Uses shiftwidth instead of tabstop at start of lines
 
-set wildmenu                                    "Autocompletion qui roxxe en mode commande (:)
-set wildmode=list:longest,list:full             "Options qui vont bien
+set wildmenu                                    "Command-line autocompletion mode
+set wildmode=list:longest,list:full             "Other good options
 set wildignore=*.o,*.r,*.so,*.sl,*.tar,*.tgz    "Patterns to ignore when completing files
 
 set t_kb=    "fix weird backspace behaviour
 set nu!
 
 "Code folding za-zR-zM
-"function! MyFoldFunction()                      "Definition personnelle d'une fonction de fold
+"function! MyFoldFunction()                      "Definition of custom folding function
 "        let line = getline(v:foldstart)
 "        let sub = substitute(line,'/\*\|\*/\|^\s+', '', 'g')
 "        let lines = v:foldend - v:foldstart + 1
 "        return v:folddashes.sub.'...'.lines.' lines...'.getline(v:foldend)
 "endfunction
-"set foldmethod=syntax                   "Fold par syntaxe
-"set foldtext=MyFoldFunction()           "Fold avec MyFoldFunction
-set foldlevel=100                       "Ouvrir tous les folds à l'ouverture du fichier
-                                        "Surchargé par le plugin latex-suite pour les .tex
-set foldcolumn=2                       "Barre à gauche de l'écran et gérer les folds avec
+"set foldmethod=syntax                 "Folding by syntax
+"set foldtext=MyFoldFunction()         "Folding with MyFoldFunction
+set foldlevel=100                      "Open all the folding on opening file
+                                       "Overload by plugin latex-suite for .tex
+set foldcolumn=2                       "Left-size bar and manage foldings
 " Make folding indent sensitive
 set foldmethod=indent
 
@@ -79,7 +79,7 @@ augroup aspect
     autocmd BufRead * 2match RedundantSpaces /\s\+$\| \+\ze\t/
 augroup END
 
-"Modification de l'autocompletion automatique pour faire apparaitre les sha-bangs
+"Modification of automatic autocompletion to show sha-bangs
 iab #i #include
 iab #d #define
 iab #b #!/bin/bash
@@ -88,7 +88,7 @@ iab #r #!/usr/bin/ruby
 iab #y #!/usr/bin/python
 iab #l #!/usr/bin/perl
 
-"Modification du comportement de vim en fonction du type de langage rencontré
+"Modification of ViM behavior depending on type of language
 autocmd BufRead  *.html,*.htm set ft=html
 autocmd BufRead  *.php,*.php3 set ft=php
 autocmd BufRead  *.c,*.h set ft=c
@@ -97,7 +97,7 @@ autocmd FileType make set noexpandtab shiftwidth=8
 autocmd BufRead  .followup,.article*,.letter,/tmp/mutt*,*.txt set ft=mail
 autocmd BufRead  *.sh set ft=sh
 autocmd BufRead  *.pl set ft=perl
-"autocmd BufRead *.tex set ft=tex               "Documents latex, surchargé par le plugin latex-suite
+"autocmd BufRead *.tex set ft=tex               "Documents latex, overloaded by hte plugin latex-suite
 augroup filetypedetect
         autocmd BufNewFile,BufRead *.tex setlocal spelllang=en,fr
 augroup END
@@ -108,12 +108,12 @@ au! Syntax psplang source $HOME/.vim/indent/psp.vim
 "Vim jump to the last position when reopening a file
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
-"Reglage de la correction orthographique (z= pour afficher les propositions)
-set spelllang=en,fr     "Dictionnaires par défaut
-set spellsuggest=7      "Nombre de propositions par défaut
-"set spell              "Désactivé à l'ouverture du document
+"Setting automatic orthograpic correction (z= to show propositions)
+set spelllang=en,fr     "Default dictionaries
+set spellsuggest=7      "Number of propositions by defaut
+"set spell              "Desactivate on opening document
 
-"Remappage des touches classiques -- help/recherche/orthographe/numeros/viewports
+"Remap commonly used keys -- help/recherche/orthographe/numeros/viewports
 nmap <F2> :vertical botright help 
 map  <F2> :vertical botright help 
 imap <F2> <esc> :vertical botright help 
@@ -136,7 +136,7 @@ nmap <F9> <c-w>w
 map  <F9> <c-w>w
 imap <F9> <esc><c-w>w
 
-"Navigation entre onglets
+"Navigation between tabs
 "nmap <c-b> :tabprevious<cr>
 "nmap <c-n> :tabnext    <cr>
 "nmap <c-t> :tabnew     <cr>
@@ -147,14 +147,14 @@ map  <c-t> :tabnew     <cr>
 "imap <c-n> <esc> :tabnext    <cr>
 "imap <c-t> <esc> :tabnew     <cr>
 
-"Manipulation du buffer
+"Manipulation of buffers
 noremap ,f :buffers   <cr>
 noremap ,b :bprevious <cr>
 noremap ,n :bnext     <cr>
 "noremap ,a :badd 
 "noremap ,d :bdelete<cr>
 
-"Remappage pour les plugins taglist et Nerdtree
+"Remap of plugins taglist and Nerdtree
 noremap ,o :TagbarToggle  <cr>
 noremap ,l :TlistToggle   <cr>
 noremap ,t :NERDTreeToggle<cr>
@@ -162,8 +162,8 @@ noremap ,g :GundoToggle   <cr>
 noremap ,s :SyntasticToggleMode<cr>
 
 "Tagbar options
-let Tlist_Ctags_Cmd = '/usr/bin/ctags'  " Pour pouvoir utiliser le plugin taglist
-"let g:tagbar_left = 1                   " Pour placer le panneau a gauche
+let Tlist_Ctags_Cmd = '/usr/bin/ctags'  " To use plugin taglist
+"let g:tagbar_left = 1                  " To set pane at left
 
 "Supertab options
 "let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
@@ -181,8 +181,8 @@ let g:syntastic_javascript_jsl_conf='-conf ~/.jsl.conf'
 highlight cursorline    term=bold cterm=bold   ctermbg=16 gui=bold   guibg=darkgrey
 highlight cursorcolumn  term=bold cterm=bold   ctermbg=16 gui=bold   guibg=darkgrey
 
-"Modification des couleurs du theme
-"Effacement des anciennes configurations
+"Modification of theme colors
+"Delete old configurations
 highlight clear WhitespaceEOL
 highlight clear Folded
 highlight clear FoldColumn
@@ -205,27 +205,27 @@ highlight clear SignColumn
 "highlight clear Todo
 highlight clear Error
 
-"Affiche en rouge les espaces et tabulations de fin de ligne
+"Show in red spaces and tabs at the end of line
 "highlight WhitespaceEOL ctermbg=blue
 "match     WhitespaceEOL /\s\+$/
 
-"Gestion des folds -- fold replié + foldcolumn dans la marge de gauche
+"MAnage folds -- fold recollapsed + foldcolumn on left margin
 highlight Folded        term=bold cterm=bold ctermfg=brown gui=bold guifg=brown
 highlight FoldColumn    term=bold cterm=bold ctermfg=white gui=bold guifg=white
 
-"Highlight des recherches
+"Highlight searches
 highlight Search        term=bold cterm=bold ctermfg=white ctermbg=darkgreen guifg=white guibg=darkgreen
 
-"Commentaires
+"Comments
 highlight Comment       term=bold cterm=bold ctermfg=darkgrey guifg=darkgrey
 
-"Statusline courante et non-courante, highlight du wildmenu
+"Current and non-current status line, highlight it
 highlight StatusLine    term=bold cterm=bold ctermfg=white    ctermbg=darkgrey gui=bold guifg=white    guibg=darkgrey
 highlight StatusLineNC  term=bold cterm=bold ctermfg=grey     ctermbg=darkgrey gui=bold guifg=grey     guibg=darkgrey
 highlight Vertsplit     term=bold cterm=bold ctermfg=white                     gui=bold guifg=white
 highlight wildmenu      term=bold cterm=bold ctermfg=white    ctermbg=darkblue gui=bold guifg=white    guibg=darkblue
 
-"Correction orthographique
+"Orthographic correction
 "spellbad word not recognized
 "spelllocal wrong spelling for selected region (en_au, en_ca, ...)
 "spellcap word not capitalised
@@ -235,7 +235,7 @@ highlight spelllocal    term=bold cterm=bold ctermfg=white ctermbg=brown       g
 highlight spellcap      term=bold cterm=bold ctermfg=white ctermbg=darkmagenta gui=bold guifg=white guibg=darkmagenta
 highlight spellrare     term=bold cterm=bold ctermfg=white ctermbg=darkblue    gui=bold guifg=white guibg=darkblue
 
-"Barre de tabulation -- sélectionné/autres onglets/barre de fond
+"Tab bar - selected/other tabs/inactive bar
 highlight TabLineSel    term=bold cterm=bold ctermfg=white                  gui=bold guifg=white
 highlight TabLine       term=bold cterm=bold ctermfg=darkblue ctermbg=white gui=bold guifg=darkblue guibg=white
 highlight TabLineFill   term=bold cterm=bold                  ctermbg=white gui=bold                guibg=white

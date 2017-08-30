@@ -789,6 +789,8 @@ the markup by using nxml's indentation rules."
     ("[]>:/\\]\\..*emacs\\'"                    . emacs-lisp-mode)
     ("\\`\\..*emacs\\'"                         . emacs-lisp-mode)
     ("[:/]_emacs\\'"                            . emacs-lisp-mode)
+    ("\\.yml$"                                  . yaml-mode)
+    ("\\.yaml$"                                 . yaml-mode)
     ) auto-mode-alist)
 )
 

@@ -803,6 +803,16 @@ the markup by using nxml's indentation rules."
 )
 
 ;; =====================================================================
+;; Fix tab width for some modes
+(add-hook 'python-mode-hook
+    (lambda ()
+        (setq indent-tabs-mode t)
+        (setq tab-width 4)
+        (setq python-indent 4)
+    )
+)
+
+;; =====================================================================
 ;; When I yank a piece of code ( known as paste in Windows lingo )
 ;; into an existing function, I like to have it indent itself to the
 ;; proper level automatically. This simple macro runs yank ( C-y )

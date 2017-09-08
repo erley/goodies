@@ -15,6 +15,13 @@
 ;; ---------------------------------------------------------------------
 ;; Global settings
 ;; ---------------------------------------------------------------------
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
 ;; ---- Paths:
 (setq
   ;; ... init file to store settings set by customize-emacs
@@ -136,14 +143,14 @@
   ;; Liberation => 209 x 65, 152x46
   (setq-default
     ; fullscreen VBox (vertical)
-;	initial-frame-alist '((top . 0) (left . 0) (width . 115) (height . 89))
-;	default-frame-alist '((top . 0) (left . 0) (width . 115) (height . 89))
+;    initial-frame-alist '((top . 0) (left . 0) (width . 115) (height . 89))
+;    default-frame-alist '((top . 0) (left . 0) (width . 115) (height . 89))
     ; windowed VBox (horizontal)
-;	initial-frame-alist '((top . 0) (left . 0) (width . 212) (height . 51))
-;	default-frame-alist '((top . 0) (left . 0) (width . 212) (height . 51))
-	; fullscreen VBox (horizontal)
-;	initial-frame-alist '((top . 0) (left . 0) (width . 185) (height . 54))
-;	default-frame-alist '((top . 0) (left . 0) (width . 185) (height . 54))
+;    initial-frame-alist '((top . 0) (left . 0) (width . 212) (height . 51))
+;    default-frame-alist '((top . 0) (left . 0) (width . 212) (height . 51))
+    ; fullscreen VBox (horizontal)
+;    initial-frame-alist '((top . 0) (left . 0) (width . 185) (height . 54))
+;    default-frame-alist '((top . 0) (left . 0) (width . 185) (height . 54))
     ; Prometheus laptop
     initial-frame-alist '((top . 0) (left . 0) (width . 151) (height . 36))
     default-frame-alist '((top . 0) (left . 0) (width . 151) (height . 36))
@@ -184,6 +191,7 @@
   ;; -------------------------------------------------------------------
   ;; ---- Scrollbars: remove
   (set-scroll-bar-mode 'nil)
+  (setq-default horizontal-scroll-bar-mode 'nil)
   ;; -------------------------------------------------------------------
   ;; ---- Tab bar: remove
   (setq-default tabbar-mode 'nil)

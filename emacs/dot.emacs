@@ -907,6 +907,14 @@ the markup by using nxml's indentation rules."
 )
 
 ;; =====================================================================
+;; Mitigate Bug#28350 (security) in Emacs 25.2 and earlier.
+(eval-after-load "enriched"
+  '(defun enriched-decode-display-prop (start end &optional param)
+    (list start end)
+   )
+)
+
+;; =====================================================================
 ;; Load customization file
 ;; Argument "noerror" tells Emacs to ignore errors if that file doesn't exist
 (load custom-file 'noerror)

@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+# This script is run as root before showing login widget.
+
+#xsetroot -solid rgb:8/8/8
+
+# It is mandatory for feh to set HOME
+export HOME=/root
+feh --bg-fill '/home/atr/.fluxbox/wallpaper.jpg'
+
+# add shutdown/reboot buttons
+/usr/local/sbin/xdmshutdown -geometry +400+50 &
+echo $! > /var/run/xdmshutdown.pid
+

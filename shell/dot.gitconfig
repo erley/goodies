@@ -3,23 +3,24 @@
 	email = erleya@gmail.com
 	signingkey = 0C0AB070A49C75AE
 [color]
-    diff = auto
-    status = auto
-    branch = auto
+	diff = auto
+	status = auto
+	branch = auto
 [alias]
-    ci = commit
-    co = checkout
-    st = status
-    br = branch
-    ds = diff --stat
-    logg = log --graph --decorate --pretty=oneline --abbrev-commit --all
+	ci = commit
+	co = checkout
+	st = status
+	br = branch
+	ds = diff --stat
+	logg = log --graph --decorate --pretty=oneline --abbrev-commit --all
 [push]
 	default = simple
 [diff]
 	tool = meld
+	guitool = meld
 [merge]
 	tool = meld
 [credential]
-    username = erley
-    helper = cache --timeout=3600
+	username = erley
+	helper = cache --timeout=3600
 

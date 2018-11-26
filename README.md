@@ -2,6 +2,7 @@ Here are various config files for my `usual toolbox`
 
     shell/
     emacs/
+    utils/
     x11/
 
 NOTE:

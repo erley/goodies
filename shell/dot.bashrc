@@ -7,8 +7,8 @@
 # Global settings
 ###
 
-# don't put duplicate lines in the history. See bash(1) for more options
-#export HISTCONTROL=ignoredups
+# don't put duplicate lines or lines starting with space in the history.
+#export HISTCONTROL=ignoreboth
 # ... and ignore same sucessive entries.
 export HISTCONTROL=ignoreboth:ignorespace
 
@@ -34,7 +34,7 @@ shopt -s globstar
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 

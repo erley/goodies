@@ -10,7 +10,7 @@
 # don't put duplicate lines in the history. See bash(1) for more options
 #export HISTCONTROL=ignoredups
 # ... and ignore same sucessive entries.
-export HISTCONTROL=ignoreboth
+export HISTCONTROL=ignoreboth:ignorespace
 
 # append to the history file, don't overwrite it
 shopt -s histappend
@@ -252,3 +252,6 @@ fi
 # sed -i 's/^use-ssh-agent/#use-ssh-agent/' /etc/X11/Xsession.options
 # sed -i 's/--daemon --sh/--daemon --enable-ssh-support --disable-scdaemon --sh/' /etc/X11/Xsession.d/90gpg-agent
 
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"

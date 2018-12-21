@@ -143,14 +143,14 @@
   ;; Liberation => 209 x 65, 152x46
   (setq-default
     ; fullscreen VBox (vertical)
-;    initial-frame-alist '((top . 0) (left . 0) (width . 115) (height . 89))
-;    default-frame-alist '((top . 0) (left . 0) (width . 115) (height . 89))
+;     initial-frame-alist '((top . 0) (left . 0) (width . 159) (height . 138))
+;     default-frame-alist '((top . 0) (left . 0) (width . 159) (height . 138))
     ; windowed VBox (horizontal)
-;    initial-frame-alist '((top . 0) (left . 0) (width . 212) (height . 51))
-;    default-frame-alist '((top . 0) (left . 0) (width . 212) (height . 51))
+;    initial-frame-alist '((top . 0) (left . 0) (width . 212) (height . 50))
+;    default-frame-alist '((top . 0) (left . 0) (width . 212) (height . 50))
     ; fullscreen VBox (horizontal)
-;    initial-frame-alist '((top . 0) (left . 0) (width . 185) (height . 54))
-;    default-frame-alist '((top . 0) (left . 0) (width . 185) (height . 54))
+;    initial-frame-alist '((top . 0) (left . 0) (width . 283) (height . 76))
+;    default-frame-alist '((top . 0) (left . 0) (width . 283) (height . 76))
     ; Prometheus laptop
     initial-frame-alist '((top . 0) (left . 0) (width . 151) (height . 36))
     default-frame-alist '((top . 0) (left . 0) (width . 151) (height . 36))

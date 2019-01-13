@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>RUS &lt;--&gt; LAT converter</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<style type="text/css">
+body {
+	background:			black;
+	margin:				0px; /* t r b l */
+	color:				white;
+	font-family:		Lucida, serif;
+	font-size:			14px;
+}
+ul {
+	list-style-position:	outside;
+	-webkit-padding-start:	0px;
+}
+a {
+	color:				cyan;
+	text-decoration:	underline;
+}
+div.panes {
+	align:				center;
+	width:				80%;
+}
+div#pane-input {
+	margin: 10px auto 5px auto; /* t r b l */
+}
+div#pane-output {
+	margin: 5px auto 0px auto; /* t r b l */
+	background:			white;
+	color:				black;
+	overflow:			auto;
+}
+	</style>
+
+	<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript">
+<!--
+function rus2lat( text ) {
+	var lat = "ABCEHKMOPTXYacegkmopuxy";
+	var rus = "АВСЕНКМОРТХУасегкториху";
+	out_txt = "";
+	for (var i = 0; i < text.length; i++) {
+		var ch = text[i];
+		var idx = lat.indexOf( ch );
+		out_txt = out_txt + (( idx == -1 ) ? ch : rus[idx]);
+	}
+	return out_txt;
+}
+function init()
+{
+	$("div#pane-input form")
+		.submit( function() {
+			input = $(this).children("#fld_msg").val();
+			output = rus2lat( input );
+			$("div#pane-output > pre").empty();
+			$("div#pane-output > pre").append( output );
+			return false; // ... but don't reload page itself!
+		} );
+}
+$( init );
+//-->
+	</script>
+</head>
+<body>
+
+	<!-- ======== Input pane ======== -->
+	<div class="panes" id="pane-input">
+		<form method="post" action="#" enctype="multipart/form-data">
+			<textarea id="fld_msg" rows="10" cols="140" maxlength="10000"
+					  placeholder="Скопируйте сюда исходный текст"></textarea>
+			<br/>
+			<input type="submit" value="Конвертировать" />
+		</form>
+	</div>
+
+	<!-- ======== Output pane ======== -->
+	<div class="panes" id="pane-output">
+		<pre>&nbsp;</pre>
+	</div>
+
+</body>
+</html>

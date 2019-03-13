@@ -13,6 +13,8 @@
 	br = branch
 	ds = diff --stat
 	logg = log --graph --decorate --pretty=oneline --abbrev-commit --all
+	dt = difftool
+	mt = mergetool
 [push]
 	default = simple
 [diff]

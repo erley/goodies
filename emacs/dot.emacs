@@ -149,8 +149,8 @@
 ;    initial-frame-alist '((top . 0) (left . 0) (width . 212) (height . 50))
 ;    default-frame-alist '((top . 0) (left . 0) (width . 212) (height . 50))
     ; fullscreen VBox (horizontal)
-;    initial-frame-alist '((top . 0) (left . 0) (width . 283) (height . 76))
-;    default-frame-alist '((top . 0) (left . 0) (width . 283) (height . 76))
+;    initial-frame-alist '((top . 0) (left . 0) (width . 283) (height . 75))
+;    default-frame-alist '((top . 0) (left . 0) (width . 283) (height . 75))
     ; Prometheus laptop
     initial-frame-alist '((top . 0) (left . 0) (width . 151) (height . 36))
     default-frame-alist '((top . 0) (left . 0) (width . 151) (height . 36))
@@ -191,7 +191,7 @@
   ;; -------------------------------------------------------------------
   ;; ---- Scrollbars: remove
   (set-scroll-bar-mode 'nil)
-  (setq-default horizontal-scroll-bar-mode 'nil)
+  (setq-default horizontal-scroll-bar-mode nil)
   ;; -------------------------------------------------------------------
   ;; ---- Tab bar: remove
   (setq-default tabbar-mode 'nil)
@@ -308,15 +308,16 @@
 ;; ---- Put in scratch a list of mostly used keybindings currently set
 (setq initial-scratch-message "
 =============================== Useful keybindings =============================
-  F2          - Toggle bookmark
-  F12         - Next bookmark
-  Shift-F12   - Prev bookmark
-  Alt-Up/Down - Search word under cursor Up/Down
-  Ctrl-x/     - Toggle comment on selected region
-  Ctrl-_      - Undo
-  Ctrl-xrd    - Delete rectangle
-  Ctrl-xrri   - Copy rectangle
-  Ctrl-xrii   - Paste rectangle
+  F2              - Toggle bookmark
+  F12             - Next bookmark
+  Shift-F12       - Prev bookmark
+  Alt-Up/Down     - Search word under cursor Up/Down
+  Ctrl-x/         - Toggle comment on selected region
+  Ctrl-_          - Undo
+  Ctrl-xrd        - Delete rectangle
+  Ctrl-xrri       - Copy rectangle
+  Ctrl-xrii       - Paste rectangle
+  Ctrl-q Ctrl-j   - Insert CR symbol (for example, in minibuffer)
 ================================ SCRATCH BUFFER ================================
 ")
 

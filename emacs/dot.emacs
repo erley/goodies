@@ -134,7 +134,7 @@
   ;; Set default font to use everywhere
   (when (equal system-type 'darwin)
     (set-default-font
-      "-apple-Liberation_Mono-medium-normal-normal-*-12-*-*-*-m-0-fontset-auto1")
+      "-apple-Liberation_Mono-medium-normal-normal-*-10-*-*-*-m-0-fontset-auto1")
   )
   ;; -------------------------------------------------------------------
   ;; ---- Window :
@@ -143,17 +143,17 @@
   ;; Liberation => 209 x 65, 152x46
   (setq-default
     ; fullscreen VBox (vertical)
-;     initial-frame-alist '((top . 0) (left . 0) (width . 159) (height . 138))
-;     default-frame-alist '((top . 0) (left . 0) (width . 159) (height . 138))
+;    initial-frame-alist '((top . 0) (left . 0) (width . 159) (height . 138))
+;    default-frame-alist '((top . 0) (left . 0) (width . 159) (height . 138))
     ; windowed VBox (horizontal)
 ;    initial-frame-alist '((top . 0) (left . 0) (width . 212) (height . 50))
 ;    default-frame-alist '((top . 0) (left . 0) (width . 212) (height . 50))
     ; fullscreen VBox (horizontal)
-;    initial-frame-alist '((top . 0) (left . 0) (width . 283) (height . 75))
-;    default-frame-alist '((top . 0) (left . 0) (width . 283) (height . 75))
+;    initial-frame-alist '((top . 0) (left . 0) (width . 185) (height . 54))
+;    default-frame-alist '((top . 0) (left . 0) (width . 185) (height . 54))
     ; Prometheus laptop
-    initial-frame-alist '((top . 0) (left . 0) (width . 151) (height . 36))
-    default-frame-alist '((top . 0) (left . 0) (width . 151) (height . 36))
+    initial-frame-alist '((top . 0) (left . 0) (width . 92) (height . 24))
+    default-frame-alist '((top . 0) (left . 0) (width . 92) (height . 24))
   ;;   ... prevent resizing frames for "smart" positioning
     smart-frame-positioning-mode 'nil
   )
@@ -191,7 +191,7 @@
   ;; -------------------------------------------------------------------
   ;; ---- Scrollbars: remove
   (set-scroll-bar-mode 'nil)
-  (setq-default horizontal-scroll-bar-mode nil)
+  (setq-default horizontal-scroll-bar-mode 'nil)
   ;; -------------------------------------------------------------------
   ;; ---- Tab bar: remove
   (setq-default tabbar-mode 'nil)

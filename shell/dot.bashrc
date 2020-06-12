@@ -98,6 +98,8 @@ esac
 if [ "$INSIDE_EMACS" != "" ]; then
     color_prompt=yes
 fi
+# show only 2 deepest PWD levels in prompt
+export PROMPT_DIRTRIM=2
 if [ "$color_prompt" = yes ]; then
     PS1_1="\[\e[36m\]\t\[\e[m\] "
     PS1_2="\[\e[32m\]\u\[\e[m\]@"
@@ -193,6 +195,10 @@ fi
 # sources /etc/bash.bashrc).
 if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
+fi
+
+if [ -f ~/.bash_completion.oc ]; then
+    . ~/.bash_completion.oc
 fi
 
 ######################

@@ -11,10 +11,12 @@
 	co = checkout
 	st = status
 	br = branch
+	brr = branch -vv --all
 	ds = diff --stat
 	logg = log --graph --decorate --pretty=oneline --abbrev-commit --all
-	dt = difftool
-	mt = mergetool
+	logx = log --graph --full-history --all --color --pretty=format:"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s"
+	dt = difftool -y
+	mt = mergetool -y
 [push]
 	default = simple
 [diff]

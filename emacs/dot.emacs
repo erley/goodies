@@ -134,7 +134,7 @@
   ;; Set default font to use everywhere
   (when (equal system-type 'darwin)
     (set-default-font
-      "-apple-Liberation_Mono-medium-normal-normal-*-10-*-*-*-m-0-fontset-auto1")
+      "-apple-Liberation_Mono-medium-normal-normal-*-12-*-*-*-m-0-fontset-auto1")
   )
   ;; -------------------------------------------------------------------
   ;; ---- Window :
@@ -149,11 +149,11 @@
 ;    initial-frame-alist '((top . 0) (left . 0) (width . 212) (height . 50))
 ;    default-frame-alist '((top . 0) (left . 0) (width . 212) (height . 50))
     ; fullscreen VBox (horizontal)
-;    initial-frame-alist '((top . 0) (left . 0) (width . 185) (height . 54))
-;    default-frame-alist '((top . 0) (left . 0) (width . 185) (height . 54))
+;    initial-frame-alist '((top . 0) (left . 0) (width . 283) (height . 75))
+;    default-frame-alist '((top . 0) (left . 0) (width . 283) (height . 75))
     ; Prometheus laptop
-    initial-frame-alist '((top . 0) (left . 0) (width . 92) (height . 24))
-    default-frame-alist '((top . 0) (left . 0) (width . 92) (height . 24))
+    initial-frame-alist '((top . 0) (left . 0) (width . 151) (height . 36))
+    default-frame-alist '((top . 0) (left . 0) (width . 151) (height . 36))
   ;;   ... prevent resizing frames for "smart" positioning
     smart-frame-positioning-mode 'nil
   )

@@ -2,10 +2,9 @@
 ;; ========         Multi-platform Emacs configuration          ========
 ;; =====================================================================
 ;; Supported environments:
-;;   - MacOS X: Emacs, console Emacs
-;;   - Windows: Emacs, console Emacs
 ;;   - FreeBSD: Emacs, console Emacs
 ;;   - Linux:   Emacs, console Emacs
+;;
 ;; =====================================================================
 
 ;; =====================================================================
@@ -16,11 +15,46 @@
 ;; Global settings
 ;; ---------------------------------------------------------------------
 
+;; ---- Packages:
+
+;; Enables basic packaging support
+(require 'package)
+
+;; Adds the Melpa archive to the list of available repositories
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/") t)
+
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
 (package-initialize)
+
+;; If there are no archived package contents, refresh them
+(when (not package-archive-contents)
+  (package-refresh-contents))
+
+;; Installs packages
+;;
+;; myPackages contains a list of package names
+(defvar myPackages
+  '(elpy                            ;; Emacs Lisp Python Environment
+    flycheck                        ;; On the fly syntax checking
+    ;py-autopep8                     ;; Run autopep8 on save
+    ;blacken                         ;; Black formatting on save
+    ;better-defaults                 ;; Set up some better Emacs defaults
+    ;material-theme                  ;; Theme
+    )
+  )
+
+;; Scans the list in myPackages
+;; If the package listed is not already installed, install it
+(mapc #'(lambda (package)
+            (unless (package-installed-p package)
+                (package-install package))
+  )
+  myPackages
+)
 
 ;; ---- Paths:
 (setq
@@ -108,30 +142,11 @@
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 
 ;; ---------------------------------------------------------------------
-;; Non-MacOSX specific settings
-;; ---------------------------------------------------------------------
-;(unless (equal system-type 'darwin)
-;...
-;)
-
-;; ---------------------------------------------------------------------
-;; MacOSX specific settings
-;; ---------------------------------------------------------------------
-(when (equal system-type 'darwin)
-  ;; -------------------------------------------------------------------
-  ;; ---- Meta key: bind to Apple key
-;  (setq ns-command-modifier 'meta)
-  ;; -------------------------------------------------------------------
-  ;; Unload TeX
-;  (unload-feature 'tex-site)
-)
-
-;; ---------------------------------------------------------------------
 ;; Settings for graphic mode only
 ;; ---------------------------------------------------------------------
 (unless (equal window-system 'nil)
   ;; -------------------------------------------------------------------
-  ;; Set default font to use everywhere
+  ;; Set default font to use everywhere (TODO: this is not correct)
   (when (equal system-type 'darwin)
     (set-default-font
       "-apple-Liberation_Mono-medium-normal-normal-*-12-*-*-*-m-0-fontset-auto1")
@@ -191,7 +206,7 @@
   ;; -------------------------------------------------------------------
   ;; ---- Scrollbars: remove
   (set-scroll-bar-mode 'nil)
-  (setq-default horizontal-scroll-bar-mode 'nil)
+  (setq-default horizontal-scroll-bar-mode nil)
   ;; -------------------------------------------------------------------
   ;; ---- Tab bar: remove
   (setq-default tabbar-mode 'nil)
@@ -642,7 +657,8 @@
 ;; ---------------------------------------------------------------------
 ;; Cyclic window frame switch with Shift-Tab
 ;(global-set-key '[\S-tab] 'other-window)
-(global-set-key '[backtab] 'other-window)
+;(global-set-key '[backtab] 'other-window)
+(global-set-key (kbd "<S-iso-lefttab>") 'other-window)
 
 ;; ---------------------------------------------------------------------
 ;; Saving Emacs Sessions - Useful when you have a bunch of source
@@ -682,7 +698,7 @@
 
 ;; =====================================================================
 ;; SVN integration
-(require 'psvn)
+;(require 'psvn)
 
 ;; =====================================================================
 ;; CVS integration
@@ -810,6 +826,16 @@ the markup by using nxml's indentation rules."
         (setq indent-tabs-mode t)
         (setq tab-width 4)
         (setq python-indent 4)
+        ;; Enable elpy
+        ;(elpy-enable)
+        ;; Enable Flycheck
+        ;(when (require 'flycheck nil t)
+        ;    (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+        ;    (add-hook 'elpy-mode-hook 'flycheck-mode)
+        ;)
+        ;; Enable autopep8 code formatter
+        ;(require 'py-autopep8)
+        ;(add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)
     )
 )
 

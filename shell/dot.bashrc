@@ -45,12 +45,10 @@ fi
 # get current branch in git repo
 function parse_git_branch() {
     BRANCH=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')
-    if [ ! "${BRANCH}" == "" ]
-    then
+    if [ ! "${BRANCH}" == "" ] ; then
         STAT=$(parse_git_dirty)
-        echo "[${BRANCH}${STAT}] "
-    else
-        echo ""
+        echo -n $'\xce\x8e ' # 'Y' = \u038e (other codes: \u07c7, \u0427
+        echo -n "${BRANCH} ${STAT}"
     fi
 }
 
@@ -58,24 +56,20 @@ function parse_git_branch() {
 function parse_git_dirty {
     status=$(git status 2>&1 | tee)
     dirty=$(echo -n "${status}" 2> /dev/null | grep "modified:" &> /dev/null; echo "$?")
-#    untracked=$(echo -n "${status}" 2> /dev/null | grep "Untracked files:" &> /dev/null; echo "$?")
+    untracked=$(echo -n "${status}" 2> /dev/null | grep "Untracked files:" &> /dev/null; echo "$?")
     ahead=$(echo -n "${status}" 2> /dev/null | grep "Your branch is ahead of" &> /dev/null; echo "$?")
     newfile=$(echo -n "echo${status}" 2> /dev/null | grep "new file:" &> /dev/null; echo "$?")
-    repofunctionnamed=$(echo -n "${status}" 2> /dev/null | grep "renamed:" &> /dev/null; echo "$?")
     deleted=$(echo -n "${status}" 2> /dev/null | grep "deleted:" &> /dev/null; echo "$?")
     bits=''
-    if [ "${renamed}" == "0" ]; then
-        bits=">${bits}"
-    fi
     if [ "${ahead}" == "0" ]; then
         bits="*${bits}"
     fi
     if [ "${newfile}" == "0" ]; then
         bits="+${bits}"
     fi
-#    if [ "${untracked}" == "0" ]; then
-#        bits="?${bits}"
-#    fi
+    if [ "${untracked}" == "0" ]; then
+        bits="?${bits}"
+    fi
     if [ "${deleted}" == "0m" ]; then
         bits="x${bits}"
     fi
@@ -83,9 +77,9 @@ function parse_git_dirty {
         bits="!${bits}"
     fi
     if [ ! "${bits}" == "" ]; then
-        echo " ${bits}"
+        echo -n "${bits}"
     else
-        echo ""
+        echo -n $'\xe2\x9c\x94'  # 'v' = \u2714
     fi
 }
 
@@ -101,16 +95,18 @@ fi
 # show only 2 deepest PWD levels in prompt
 export PROMPT_DIRTRIM=2
 if [ "$color_prompt" = yes ]; then
-    PS1_1="\[\e[36m\]\t\[\e[m\] "
-    PS1_2="\[\e[32m\]\u\[\e[m\]@"
-    PS1_3="\[\e[36m\]\h\[\e[m\] "
-    PS1_4="\[\e[32m\]\w\[\e[m\] "
-    PS1_5="\[\e[33m\]\$(parse_git_branch)\[\e[m\]"
-    PS1_6="\[\e[1;31m\]>\[\e[m\] "
+    PS1_1="\[\e[36m\e[48;5;236m\]\t\[\e[0m\] "
+    PS1_2="\[\e[1;32m\e[4m\]\u\[\e[0m\]\[\e[4m\]@"
+    PS1_3="\[\e[1;36m\]\h\[\e[0m\] "
+    PS1_4="\[\e[32m\]\w\[\e[0m\] "
+    PS1_5="\[\e[36m\e[48;5;236m\]\$(parse_git_branch)\[\e[0m\] "
+    PS1_6=$'\\[\e[1;32m\\]\xe2\x96\xb6\\[\e[0m\\] '  # '>' = \u25b6
+
     PS1="${PS1_1}${PS1_2}${PS1_3}${PS1_4}${PS1_5}${PS1_6}"
-    PS2="\[\e[0;30m\]\u\[\e[m\]\[\e[0;35m\]@\[\e[m\]\[\e[0;30m\]\h\[\e[m\] \[\e[0;30m\]\W\[\e[m\] \[\e[0;31m\]>\[\e[m\] "
+    PS2="\[\e[0;30m\]\u\[\e[0m\]\[\e[0;35m\]@\[\e[0m\]\[\e[0;30m\]\h\[\e[0m\] \[\e[0;30m\]\W\[\e[0m\] \[\e[0;31m\]>\[\e[0m\] "
     PS3="#? "
     PS4="+ % "
+    #echo -n " " ; for n in {0..9} {a..f} ; do echo -n " ${n}" ; done ; echo ; for i in {0..9} {a..f} ; do echo -n "${i} " ; for n in {0..9} {a..f} ; do echo -e -n "\u33${i}${n} " ; done; echo ; done
 else
     PS1='${debian_chroot:+($debian_chroot)}$\u@\h \W \$ '
 fi
@@ -131,7 +127,7 @@ esac
 
 export LS_COLORS='ow=1;34:ln=1;34'
 export BACKGROUND_COLOR=black # or 'white'
-export JAVA_HOME=$(realpath $(dirname $(readlink -f $(which java)))/../..)
+export JAVA_HOME=$(realpath $(dirname $(readlink -f $(which java)))/..)
 export PATH=$PATH:/usr/sbin:$HOME/.local/bin
 export PAGER=less
 
@@ -258,6 +254,3 @@ fi
 # sed -i 's/^use-ssh-agent/#use-ssh-agent/' /etc/X11/Xsession.options
 # sed -i 's/--daemon --sh/--daemon --enable-ssh-support --disable-scdaemon --sh/' /etc/X11/Xsession.d/90gpg-agent
 
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"

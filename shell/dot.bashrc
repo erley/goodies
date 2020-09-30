@@ -47,7 +47,8 @@ function parse_git_branch() {
     BRANCH=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/')
     if [ ! "${BRANCH}" == "" ] ; then
         STAT=$(parse_git_dirty)
-        echo -n $'\xce\x8e ' # 'Y' = \u038e (other codes: \u07c7, \u0427
+        #echo -n $'\xce\x8e ' # 'Y' = \u038e (other codes: \u07c7, \u0427
+        echo -n $'\xe2\x8c\xa5 ' # branch symbol = \u2325 (\x2387)
         echo -n "${BRANCH} ${STAT}"
     fi
 }
@@ -62,7 +63,11 @@ function parse_git_dirty {
     deleted=$(echo -n "${status}" 2> /dev/null | grep "deleted:" &> /dev/null; echo "$?")
     bits=''
     if [ "${ahead}" == "0" ]; then
-        bits="*${bits}"
+        bits=$'\xe2\x86\x91'${bits}  # '*' => \xe2\x86\x91
+    fi
+    if [ "${dirty}" == "0" ]; then
+        #bits=$'\xe2\x89\xa0'${bits}  # '!' => "\u2260"
+        bits=$'\xe2\x9c\x90'${bits}  # pencil = "\u2710"
     fi
     if [ "${newfile}" == "0" ]; then
         bits="+${bits}"
@@ -70,14 +75,11 @@ function parse_git_dirty {
     if [ "${untracked}" == "0" ]; then
         bits="?${bits}"
     fi
-    if [ "${deleted}" == "0m" ]; then
-        bits="x${bits}"
-    fi
-    if [ "${dirty}" == "0" ]; then
-        bits="!${bits}"
+    if [ "${deleted}" == "0" ]; then
+        bits=$'\xe2\x9c\x98'${bits}  # 'x' = "\u2718"
     fi
     if [ ! "${bits}" == "" ]; then
-        echo -n "${bits}"
+        echo -n ${bits}
     else
         echo -n $'\xe2\x9c\x94'  # 'v' = \u2714
     fi

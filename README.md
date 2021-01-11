@@ -14,3 +14,5 @@ After cloning this repo, perform several settings:
     > git config commit.gpgsign true
     > git config credential.username erley
 
+Use SSH key authentication when possible to push changes
+

@@ -72,11 +72,11 @@ function parse_git_dirty {
     if [ "${newfile}" == "0" ]; then
         bits="+${bits}"
     fi
-    if [ "${untracked}" == "0" ]; then
-        bits="?${bits}"
-    fi
     if [ "${deleted}" == "0" ]; then
         bits=$'\xe2\x9c\x98'${bits}  # 'x' = "\u2718"
+    fi
+    if [ "${untracked}" == "0" ]; then
+        bits="?${bits}"
     fi
     if [ ! "${bits}" == "" ]; then
         echo -n ${bits}
@@ -256,3 +256,5 @@ fi
 # sed -i 's/^use-ssh-agent/#use-ssh-agent/' /etc/X11/Xsession.options
 # sed -i 's/--daemon --sh/--daemon --enable-ssh-support --disable-scdaemon --sh/' /etc/X11/Xsession.d/90gpg-agent
 
+
+#complete -C /usr/bin/terraform terraform
